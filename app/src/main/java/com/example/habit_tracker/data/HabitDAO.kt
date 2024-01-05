@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HabitDAO {
-
     @Upsert
     suspend fun upsertHabit(habit: Habit)
 
