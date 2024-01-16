@@ -9,5 +9,9 @@ sealed interface HabitEvents{
         val habitTitle: String,
         val habitDescription: String
     ) : HabitEvents
+    data class UpdateHabit(
+        val habitTitle: String,
+        val habitDescription: String
+    ) : HabitEvents
 
 }

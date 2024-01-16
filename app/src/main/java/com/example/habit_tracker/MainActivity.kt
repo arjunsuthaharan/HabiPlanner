@@ -18,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
 import com.example.habit_tracker.data.HabitsDatabase
 import com.example.habit_tracker.presentation.AddHabitScreen
+import com.example.habit_tracker.presentation.EditHabitScreen
 import com.example.habit_tracker.presentation.HabitsScreen
 import com.example.habit_tracker.presentation.HabitsViewModel
 import com.example.habit_tracker.ui.theme.Habit_TrackerTheme
@@ -63,6 +64,14 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("AddHabitScreen"){
                             AddHabitScreen(
+                                state = state,
+                                navController = navController,
+                                onEvent = viewModel::onEvent
+                            )
+                        }
+                        composable("EditHabitScreen"){
+                            EditHabitScreen(
+                                id = 1,
                                 state = state,
                                 navController = navController,
                                 onEvent = viewModel::onEvent

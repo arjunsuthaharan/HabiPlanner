@@ -60,6 +60,24 @@ class HabitsViewModel(
             HabitEvents.SortHabits -> {
                 isSortedByStartDate.value = !isSortedByStartDate.value
             }
+
+            is HabitEvents.UpdateHabit -> {
+                val habit = Habit(
+                    habitTitle = state.value.habitTitle.value,
+                    habitDescription = state.value.habitDescription.value,
+                    habitStartDate = System.currentTimeMillis()
+                )
+
+                viewModelScope.launch{
+                    dao.upsertHabit(habit)
+                }
+                _state.update{
+                    it.copy(
+                        habitTitle = mutableStateOf(""),
+                        habitDescription = mutableStateOf("")
+                    )
+                }
+            }
         }
     }
 }

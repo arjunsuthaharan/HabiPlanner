@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Sort
+import androidx.compose.material.icons.rounded.Update
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -35,6 +36,7 @@ import androidx.navigation.NavController
 import com.example.habit_tracker.data.Habit
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -93,10 +95,7 @@ fun HabitsScreen(
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ){
             items(state.habits.size) { index ->
-
-                HabitItem(state = state, index = index, onEvent = onEvent)
-
-
+                HabitItem(state = state, index = index, navController = navController, onEvent = onEvent)
             }
         }
 
@@ -110,6 +109,7 @@ fun HabitsScreen(
 fun HabitItem(
     state: HabitState,
     index: Int,
+    navController: NavController,
     onEvent: (HabitEvents) -> Unit
 ){
 
@@ -140,7 +140,15 @@ fun HabitItem(
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = convertLongToTime(state.habits[index].habitStartDate),
+                text = "Started : " + convertLongToTime(state.habits[index].habitStartDate),
+                fontSize = 28.sp,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = getHabitStreak(state.habits[index].habitStartDate) + " days",
                 fontSize = 28.sp,
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
@@ -153,6 +161,17 @@ fun HabitItem(
                 tint = MaterialTheme.colorScheme.onPrimaryContainer)
 
         }
+
+        IconButton(onClick = {
+            state.habitTitle.value = ""
+            state.habitDescription.value = ""
+            navController.navigate("EditHabitScreen")
+        }) {
+            Icon(imageVector = Icons.Rounded.Update, contentDescription = "Update Habit",
+                modifier = Modifier.size(40.dp),
+                tint = MaterialTheme.colorScheme.onPrimaryContainer)
+
+        }
     }
 }
 
@@ -160,4 +179,9 @@ fun convertLongToTime(time: Long): String {
     val date = Date(time)
     val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
     return format.format(date)
+}
+
+fun getHabitStreak(time: Long): String {
+    val streak = TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - time)
+    return streak.toString()
 }
