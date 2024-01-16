@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.habit_tracker.data.Habit
+import java.text.SimpleDateFormat
+import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -134,6 +136,14 @@ fun HabitItem(
                 fontSize = 28.sp,
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = convertLongToTime(state.habits[index].habitStartDate),
+                fontSize = 28.sp,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
         }
         
         IconButton(onClick = { onEvent(HabitEvents.DeleteHabit(state.habits[index]))
@@ -144,4 +154,10 @@ fun HabitItem(
 
         }
     }
+}
+
+fun convertLongToTime(time: Long): String {
+    val date = Date(time)
+    val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+    return format.format(date)
 }
