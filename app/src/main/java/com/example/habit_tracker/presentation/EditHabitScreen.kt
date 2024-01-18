@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -44,7 +45,7 @@ fun EditHabitScreen(
             verticalAlignment = Alignment.CenterVertically
 
         ) {
-            Text(text = "Edit Current Habit",
+            Text(text = "Edit Habit",
                 modifier = Modifier
                     .weight(1f),
                 fontSize = 20.sp,
@@ -52,19 +53,8 @@ fun EditHabitScreen(
                 color = MaterialTheme.colorScheme.onPrimary
             )
         }
-    },
-        floatingActionButton = {
-            FloatingActionButton(onClick = {
-                onEvent(HabitEvents.UpdateHabit(
-                    habitTitle = state.habitTitle.value,
-                    habitDescription = state.habitDescription.value
-                ))
-                navController.popBackStack()
-            }) {
+    }
 
-                Icon(imageVector = Icons.Rounded.Check, contentDescription = "Save Note")
-            }
-        }
     ) {
             paddingValues ->
 
@@ -99,6 +89,20 @@ fun EditHabitScreen(
                     Text(text = "Description")
                 }
             )
+
+
+            Button(onClick = {
+                onEvent(HabitEvents.SaveHabit(
+                    habitTitle = state.habitTitle.value,
+                    habitDescription = state.habitDescription.value
+                ))
+                navController.popBackStack()
+            },                modifier = Modifier
+                .fillMaxWidth()
+                .padding(14.dp),) {
+
+                Text("Edit Habit")
+            }
         }
 
     }
