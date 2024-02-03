@@ -60,7 +60,7 @@ fun HabitsScreen(
                 verticalAlignment = Alignment.CenterVertically
 
             ) {
-                Text(text = "Habit Tracker",
+                Text(text = "HabiPlanner",
                     modifier = Modifier
                         .weight(1f),
                     fontSize = 20.sp,
