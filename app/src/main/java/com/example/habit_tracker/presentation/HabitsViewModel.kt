@@ -63,13 +63,14 @@ class HabitsViewModel(
 
             is HabitEvents.UpdateHabit -> {
                 val habit = Habit(
+                    habitID = state.value.habitID.value,
                     habitTitle = state.value.habitTitle.value,
                     habitDescription = state.value.habitDescription.value,
                     habitStartDate = System.currentTimeMillis()
                 )
 
                 viewModelScope.launch{
-                    dao.upsertHabit(habit)
+                    dao.updateHabit(habit)
                 }
                 _state.update{
                     it.copy(

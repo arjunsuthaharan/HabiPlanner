@@ -106,7 +106,6 @@ fun HabitsScreen(
 
 
 }
-
 @Composable
 fun HabitItem(
     state: HabitState,
@@ -155,9 +154,11 @@ fun HabitItem(
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
         }
+
         IconButton(onClick = {
-            state.habitTitle.value = ""
-            state.habitDescription.value = ""
+            state.habitID.value = state.habits[index].habitID
+            state.habitTitle.value = state.habits[index].habitTitle
+            state.habitDescription.value = state.habits[index].habitDescription
             navController.navigate("EditHabitScreen")
         }) {
             Icon(
@@ -166,11 +167,13 @@ fun HabitItem(
                 tint = MaterialTheme.colorScheme.onPrimaryContainer
             )
         }
+
             IconButton(onClick = { onEvent(HabitEvents.DeleteHabit(state.habits[index]))
             }) {
                 Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete Habit",
                     modifier = Modifier.size(40.dp),
                     tint = MaterialTheme.colorScheme.onPrimaryContainer)
+
 
             }
 

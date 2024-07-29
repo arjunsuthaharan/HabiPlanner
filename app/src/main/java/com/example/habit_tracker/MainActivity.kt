@@ -71,7 +71,6 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("EditHabitScreen"){
                             EditHabitScreen(
-                                id = 1,
                                 state = state,
                                 navController = navController,
                                 onEvent = viewModel::onEvent

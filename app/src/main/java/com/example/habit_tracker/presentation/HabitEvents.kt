@@ -10,6 +10,7 @@ sealed interface HabitEvents{
         val habitDescription: String
     ) : HabitEvents
     data class UpdateHabit(
+        val habitID: Int,
         val habitTitle: String,
         val habitDescription: String
     ) : HabitEvents

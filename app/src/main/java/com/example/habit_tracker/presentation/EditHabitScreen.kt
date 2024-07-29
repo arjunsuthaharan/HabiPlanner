@@ -30,7 +30,6 @@ import androidx.navigation.NavController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditHabitScreen(
-    id : Int,
     state: HabitState,
     navController: NavController,
     onEvent: (HabitEvents) -> Unit
@@ -92,7 +91,8 @@ fun EditHabitScreen(
 
 
             Button(onClick = {
-                onEvent(HabitEvents.SaveHabit(
+                onEvent(HabitEvents.UpdateHabit(
+                    habitID = state.habitID.value,
                     habitTitle = state.habitTitle.value,
                     habitDescription = state.habitDescription.value
                 ))
