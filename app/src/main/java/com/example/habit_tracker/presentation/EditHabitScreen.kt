@@ -94,7 +94,8 @@ fun EditHabitScreen(
                 onEvent(HabitEvents.UpdateHabit(
                     habitID = state.habitID.value,
                     habitTitle = state.habitTitle.value,
-                    habitDescription = state.habitDescription.value
+                    habitDescription = state.habitDescription.value,
+                    habitStartDate = state.habitStartDate.value
                 ))
                 navController.popBackStack()
             },                modifier = Modifier

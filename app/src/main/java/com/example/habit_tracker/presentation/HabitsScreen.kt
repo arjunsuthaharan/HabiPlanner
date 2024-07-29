@@ -157,6 +157,7 @@ fun HabitItem(
 
         IconButton(onClick = {
             state.habitID.value = state.habits[index].habitID
+            state.habitStartDate.value = state.habits[index].habitStartDate
             state.habitTitle.value = state.habits[index].habitTitle
             state.habitDescription.value = state.habits[index].habitDescription
             navController.navigate("EditHabitScreen")

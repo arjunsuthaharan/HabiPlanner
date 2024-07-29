@@ -66,7 +66,7 @@ class HabitsViewModel(
                     habitID = state.value.habitID.value,
                     habitTitle = state.value.habitTitle.value,
                     habitDescription = state.value.habitDescription.value,
-                    habitStartDate = System.currentTimeMillis()
+                    habitStartDate = state.value.habitStartDate.value
                 )
 
                 viewModelScope.launch{
