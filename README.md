@@ -1,4 +1,4 @@
-## HabiPlanner
+## HabiPlanner 📋
 
 HabiPlanner is a self-management Android application that lets users keep track of the habits and positive changes they're bringing into their lives.
 
