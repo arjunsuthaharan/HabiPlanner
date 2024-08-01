@@ -19,6 +19,7 @@ import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.EditNote
 import androidx.compose.material.icons.rounded.Sort
+import androidx.compose.material.icons.rounded.SyncLock
 import androidx.compose.material.icons.rounded.Update
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -28,6 +29,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -104,7 +109,6 @@ fun HabitsScreen(
 
     }
 
-
 }
 @Composable
 fun HabitItem(
@@ -113,6 +117,13 @@ fun HabitItem(
     navController: NavController,
     onEvent: (HabitEvents) -> Unit
 ){
+
+    var showDialog by remember { mutableStateOf(false) }
+
+    if(showDialog){
+        AlertDialog(
+            onDismiss = { showDialog = false})
+    }
 
     Row(
         modifier = Modifier
@@ -156,6 +167,16 @@ fun HabitItem(
         }
 
         IconButton(onClick = {
+            showDialog = true
+        }) {
+            Icon(
+                imageVector = Icons.Rounded.SyncLock, contentDescription = "Reset Streak",
+                modifier = Modifier.size(40.dp),
+                tint = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        }
+
+        IconButton(onClick = {
             state.habitID.value = state.habits[index].habitID
             state.habitStartDate.value = state.habits[index].habitStartDate
             state.habitTitle.value = state.habits[index].habitTitle
@@ -177,7 +198,6 @@ fun HabitItem(
 
 
             }
-
 
     }
 }
