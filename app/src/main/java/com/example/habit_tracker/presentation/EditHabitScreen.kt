@@ -89,7 +89,6 @@ fun EditHabitScreen(
                 }
             )
 
-
             Button(onClick = {
                 onEvent(HabitEvents.UpdateHabit(
                     habitID = state.habitID.value,
