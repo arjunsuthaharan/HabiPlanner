@@ -117,9 +117,9 @@ fun HabitItem(
     onEvent: (HabitEvents) -> Unit,
 ){
 
-    var showDialog by remember { mutableStateOf(false) }
+    var showResetDialog by remember { mutableStateOf(false) }
 
-    if(showDialog){
+    if(showResetDialog){
         AlertDialog(
             icon = {
                 Icon(Icons.Default.Info, contentDescription = "Example Icon")
@@ -131,12 +131,12 @@ fun HabitItem(
                 Text(text = "Are you sure you want to reset your streak?")
             },
             onDismissRequest = {
-                showDialog = false
+                showResetDialog = false
             },
             confirmButton = {
                 Button(
                     onClick = { resetStreak(index = index, state = state, onEvent = onEvent)
-                    showDialog = false}
+                    showResetDialog = false}
                     //onClick = {showDialog = false}
                 ) {
                     Text("Yes")
@@ -144,7 +144,42 @@ fun HabitItem(
             },
             dismissButton = {
                 Button(
-                    onClick = {showDialog = false}
+                    onClick = {showResetDialog = false}
+                ) {
+                    Text("No")
+                }
+            }
+        )
+    }
+
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
+    if(showDeleteDialog){
+        AlertDialog(
+            icon = {
+                Icon(Icons.Default.Info, contentDescription = "Example Icon")
+            },
+            title = {
+                Text(text = "Delete Habit")
+            },
+            text = {
+                Text(text = "Are you sure you want to delete this habit?")
+            },
+            onDismissRequest = {
+                showDeleteDialog = false
+            },
+            confirmButton = {
+                Button(
+                    onClick = { onEvent(HabitEvents.DeleteHabit(state.habits[index]))
+                        showDeleteDialog = false}
+                    //onClick = {showDialog = false}
+                ) {
+                    Text("Yes")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {showDeleteDialog = false}
                 ) {
                     Text("No")
                 }
@@ -194,7 +229,7 @@ fun HabitItem(
         }
 
         IconButton(onClick = {
-            showDialog = true
+            showResetDialog = true
         }) {
             Icon(
                 imageVector = Icons.Rounded.SyncLock, contentDescription = "Reset Streak",
@@ -217,7 +252,8 @@ fun HabitItem(
             )
         }
 
-            IconButton(onClick = { onEvent(HabitEvents.DeleteHabit(state.habits[index]))
+            IconButton(onClick = { showDeleteDialog = true
+            //onEvent(HabitEvents.DeleteHabit(state.habits[index]))
             }) {
                 Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete Habit",
                     modifier = Modifier.size(40.dp),
