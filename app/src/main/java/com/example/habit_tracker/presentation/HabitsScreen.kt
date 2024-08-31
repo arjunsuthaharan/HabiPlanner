@@ -239,11 +239,7 @@ fun HabitItem(
         }
 
         IconButton(onClick = {
-            state.habitID.value = state.habits[index].habitID
-            state.habitStartDate.value = state.habits[index].habitStartDate
-            state.habitTitle.value = state.habits[index].habitTitle
-            state.habitDescription.value = state.habits[index].habitDescription
-            navController.navigate("EditHabitScreen")
+            editHabit(index = index, state = state, navController = navController)
         }) {
             Icon(
                 imageVector = Icons.Rounded.EditNote, contentDescription = "Update Habit",
@@ -253,13 +249,24 @@ fun HabitItem(
         }
 
             IconButton(onClick = { showDeleteDialog = true
-            //onEvent(HabitEvents.DeleteHabit(state.habits[index]))
             }) {
                 Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete Habit",
                     modifier = Modifier.size(40.dp),
                     tint = MaterialTheme.colorScheme.onPrimaryContainer)
             }
     }
+}
+
+fun editHabit(
+    index : Int,
+    state: HabitState,
+    navController: NavController,
+){
+    state.habitID.value = state.habits[index].habitID
+    state.habitStartDate.value = state.habits[index].habitStartDate
+    state.habitTitle.value = state.habits[index].habitTitle
+    state.habitDescription.value = state.habits[index].habitDescription
+    navController.navigate("EditHabitScreen")
 }
 
 fun resetStreak(

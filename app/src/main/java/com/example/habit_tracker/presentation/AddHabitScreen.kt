@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Sort
 import androidx.compose.material3.Button
@@ -47,6 +48,13 @@ fun AddHabitScreen(
             verticalAlignment = Alignment.CenterVertically
 
         ) {
+            IconButton(onClick = {navController.popBackStack()}) {
+                Icon(imageVector = Icons.Rounded.ArrowBack,
+                    contentDescription = "Sort Habits",
+                    modifier = Modifier.size(35.dp),
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            }
             Text(text = "Add New Habit",
                 modifier = Modifier
                     .weight(1f),
