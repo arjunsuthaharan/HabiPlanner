@@ -1,6 +1,5 @@
 package com.example.habit_tracker.presentation
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,18 +10,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.EditNote
 import androidx.compose.material.icons.rounded.Sort
 import androidx.compose.material.icons.rounded.SyncLock
-import androidx.compose.material.icons.rounded.Update
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -44,14 +40,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.habit_tracker.data.Habit
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-
 fun HabitsScreen(
     state: HabitState,
     navController: NavController,
@@ -114,6 +108,7 @@ fun HabitsScreen(
     }
 
 }
+
 @Composable
 fun HabitItem(
     state: HabitState,
@@ -125,11 +120,36 @@ fun HabitItem(
     var showDialog by remember { mutableStateOf(false) }
 
     if(showDialog){
-        ResetDialog(
-            index = index,
-            state = state,
-            onEvent = onEvent,
-            onDismiss = {showDialog = false})
+        AlertDialog(
+            icon = {
+                Icon(Icons.Default.Info, contentDescription = "Example Icon")
+            },
+            title = {
+                Text(text = "Reset Streak")
+            },
+            text = {
+                Text(text = "Are you sure you want to reset your streak?")
+            },
+            onDismissRequest = {
+                showDialog = false
+            },
+            confirmButton = {
+                Button(
+                    onClick = { resetStreak(index = index, state = state, onEvent = onEvent)
+                    showDialog = false}
+                    //onClick = {showDialog = false}
+                ) {
+                    Text("Yes")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {showDialog = false}
+                ) {
+                    Text("No")
+                }
+            }
+        )
     }
 
     Row(
@@ -202,65 +222,27 @@ fun HabitItem(
                 Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete Habit",
                     modifier = Modifier.size(40.dp),
                     tint = MaterialTheme.colorScheme.onPrimaryContainer)
-
-
             }
-
     }
 }
 
-@Composable
-fun ResetDialog(
+fun resetStreak(
     index : Int,
     state: HabitState,
-    onEvent: (HabitEvents) -> Unit,
-    onDismiss:()->Unit
+    onEvent: (HabitEvents) -> Unit
 ){
-
-    AlertDialog(
-        icon = {
-            Icon(Icons.Default.Info, contentDescription = "Example Icon")
-        },
-        title = {
-            Text(text = "Reset Streak")
-        },
-        text = {
-            Text(text = "Are you sure you want to reset your streak?")
-        },
-        onDismissRequest = {
-            onDismiss
-        },
-        confirmButton = {
-            Button(
-                onClick = {
-                    onDismiss
-                    state.habitID.value = state.habits[index].habitID
-                    state.habitStartDate.value = System.currentTimeMillis()
-                    state.habitTitle.value = state.habits[index].habitTitle
-                    state.habitDescription.value = state.habits[index].habitDescription
-                    onEvent(HabitEvents.UpdateHabit(
-                        habitID = state.habitID.value,
-                        habitTitle = state.habitTitle.value,
-                        habitDescription = state.habitDescription.value,
-                        habitStartDate = state.habitStartDate.value
-                    ))
-                }
-
-
-            ) {
-                Text("Yes")
-            }
-        },
-        dismissButton = {
-            Button(
-                onClick = onDismiss
-            ) {
-                Text("No")
-            }
-        }
-    )
-
+    state.habitID.value = state.habits[index].habitID
+    state.habitStartDate.value = System.currentTimeMillis()
+    state.habitTitle.value = state.habits[index].habitTitle
+    state.habitDescription.value = state.habits[index].habitDescription
+    onEvent(HabitEvents.UpdateHabit(
+        habitID = state.habitID.value,
+        habitTitle = state.habitTitle.value,
+        habitDescription = state.habitDescription.value,
+        habitStartDate = state.habitStartDate.value
+    ))
 }
+
 fun convertLongToTime(time: Long): String {
     val date = Date(time)
     val format = SimpleDateFormat("MM.dd.yyyy")
