@@ -28,6 +28,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -79,6 +80,18 @@ fun HabitsScreen(
                     )
                 }
 
+                IconButton(onClick = {
+                    state.habitTitle.value = ""
+                    state.habitDescription.value = ""
+                    navController.navigate("AddHabitScreen")
+                }) {
+                    Icon(imageVector = Icons.Rounded.Add,
+                        contentDescription = "Sort Habits",
+                        modifier = Modifier.size(35.dp),
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+
             }
         },
         floatingActionButton = {
@@ -86,8 +99,10 @@ fun HabitsScreen(
                 state.habitTitle.value = ""
                 state.habitDescription.value = ""
                 navController.navigate("AddHabitScreen")
-            }) {
-                Icon(imageVector = Icons.Rounded.Add, contentDescription = "Add New Habit")
+            }, containerColor = MaterialTheme.colorScheme.primary){
+                Icon(imageVector = Icons.Rounded.Add, contentDescription = "Add New Habit",
+                    tint = MaterialTheme.colorScheme.onPrimary)
+
             }
         }
     ){ paddingValues ->
@@ -121,9 +136,6 @@ fun HabitItem(
 
     if(showResetDialog){
         AlertDialog(
-            icon = {
-                Icon(Icons.Default.Info, contentDescription = "Example Icon")
-            },
             title = {
                 Text(text = "Reset Streak")
             },
@@ -156,9 +168,6 @@ fun HabitItem(
 
     if(showDeleteDialog){
         AlertDialog(
-            icon = {
-                Icon(Icons.Default.Info, contentDescription = "Example Icon")
-            },
             title = {
                 Text(text = "Delete Habit")
             },
@@ -191,7 +200,7 @@ fun HabitItem(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(10.dp))
-            .background(MaterialTheme.colorScheme.primaryContainer)
+            .background(MaterialTheme.colorScheme.secondary)
             .padding(15.dp)
     ){
         Column(
@@ -234,7 +243,7 @@ fun HabitItem(
             Icon(
                 imageVector = Icons.Rounded.SyncLock, contentDescription = "Reset Streak",
                 modifier = Modifier.size(40.dp),
-                tint = MaterialTheme.colorScheme.onPrimaryContainer
+                tint = MaterialTheme.colorScheme.onSecondaryContainer
             )
         }
 
@@ -244,7 +253,7 @@ fun HabitItem(
             Icon(
                 imageVector = Icons.Rounded.EditNote, contentDescription = "Update Habit",
                 modifier = Modifier.size(40.dp),
-                tint = MaterialTheme.colorScheme.onPrimaryContainer
+                tint = MaterialTheme.colorScheme.onSecondaryContainer
             )
         }
 
@@ -252,7 +261,7 @@ fun HabitItem(
             }) {
                 Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete Habit",
                     modifier = Modifier.size(40.dp),
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer)
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer)
             }
     }
 }
