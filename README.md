@@ -8,6 +8,8 @@ HabiPlanner is a self-management Android application that lets users keep track 
 
 Creation and management of habits, automatically tracking habit streak and duration<br>
 ROOM Local database, automatically saving habits when the application is closed
+Editing existing habits as the users' goals change
+Reset the streak timer when the user breaks their habit
 
 ### Technology
 
