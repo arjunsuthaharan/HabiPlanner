@@ -31,7 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
-
+// Function for displaying the Edit Habits Screen
+// Retrieves state, navController and onEvent handler
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditHabitScreen(
@@ -43,7 +44,7 @@ fun EditHabitScreen(
     var inVal = true
     val context = LocalContext.current
 
-
+    // Scaffold for the top header holding the app title and back navigation button, input fields and button for editing existing habit
     Scaffold(topBar = {
         Row(
             modifier = Modifier
@@ -78,6 +79,8 @@ fun EditHabitScreen(
             modifier = Modifier.padding(paddingValues)
                 .fillMaxSize()
         ) {
+            // TextFields for user to input habit title and description
+            // TextFields will be populated with existing habits title and description values
             TextField(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -106,6 +109,10 @@ fun EditHabitScreen(
                 }
             )
 
+            // Button for editing habit
+            // OnClick first performs input validation check to confirm habitTitle and habitDescription values are not null
+            // If true retrieves user inputted values and calls UpdateHabit function from HabitEvents
+            // If false displays toast message instructing user to populate both fields
             Button(onClick = {
 
                 inVal = !(state.habitTitle.value == "" || state.habitDescription.value == "")
@@ -121,14 +128,14 @@ fun EditHabitScreen(
                 }
 
                 else{
-                    Toast.makeText(context, "Please enter the title and description of your new habit.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Please enter the title and description of your existing habit.", Toast.LENGTH_SHORT).show()
                 }
 
             },                modifier = Modifier
                 .fillMaxWidth()
                 .padding(14.dp),) {
 
-                Text("Edit Habit")
+                Text("Update Habit")
             }
         }
 

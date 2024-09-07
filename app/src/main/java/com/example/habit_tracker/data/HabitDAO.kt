@@ -10,6 +10,8 @@ import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
 
+// Data Access Object interface for database
+// Contains queries for upsert, updating, deleting, sorting by title and date
 @Dao
 interface HabitDAO {
     @Upsert

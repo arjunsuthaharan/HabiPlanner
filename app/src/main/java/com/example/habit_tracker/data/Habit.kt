@@ -3,6 +3,7 @@ package com.example.habit_tracker.data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+// data class for Habits
 @Entity
 data class Habit(
     val habitTitle: String,

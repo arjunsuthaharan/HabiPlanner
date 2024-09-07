@@ -3,7 +3,7 @@ package com.example.habit_tracker.data
 import androidx.room.Database
 import androidx.room.RoomDatabase
 
-
+// Database file for the Habits Database
 @Database(
     entities = [Habit::class],
     version = 1

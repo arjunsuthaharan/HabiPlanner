@@ -32,7 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
-
+// Function for displaying the Add Habits Screen
+// Retrieves state, navController and onEvent handler
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddHabitScreen(
@@ -44,6 +45,8 @@ fun AddHabitScreen(
     var inVal = true
     val context = LocalContext.current
 
+
+    // Scaffold for the top header holding the app title and back navigation button, input fields and button for adding new habit
     Scaffold(topBar = {
         Row(
             modifier = Modifier
@@ -78,6 +81,8 @@ fun AddHabitScreen(
             modifier = Modifier.padding(paddingValues)
                 .fillMaxSize()
         ) {
+
+            // TextFields for user to input habit title and description
             TextField(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -106,7 +111,10 @@ fun AddHabitScreen(
                 }
             )
 
-
+            // Button for adding habit
+            // OnClick first performs input validation check to confirm habitTitle and habitDescription values are not null
+            // If true retrieves user inputted values and calls SaveHabit function from HabitEvents
+            // If false displays toast message instructing user to populate both fields
             Button(onClick = {
 
                 inVal = !(state.habitTitle.value == "" || state.habitDescription.value == "")

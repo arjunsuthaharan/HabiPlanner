@@ -59,7 +59,7 @@ import java.util.concurrent.TimeUnit
 
 
 // Function for displaying the HabitsScreen
-// Retrieves state, navController, and onEvent from MainActivity
+// Retrieves state, navController, and onEvent handler
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitsScreen(
