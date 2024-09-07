@@ -21,6 +21,7 @@ private val DarkColorScheme = darkColorScheme(
     secondary = Lavender,
     tertiary = DarkBlue,
     onPrimary = Color.White,
+    onSecondary = Color.White,
     onSecondaryContainer = Color.Black
 
 
@@ -29,7 +30,8 @@ private val DarkColorScheme = darkColorScheme(
 private val LightColorScheme = lightColorScheme(
     primary = Hamlindigo,
     secondary = Lavender,
-    tertiary = DarkBlue
+    tertiary = DarkBlue,
+    onSecondary = Color.Black,
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
