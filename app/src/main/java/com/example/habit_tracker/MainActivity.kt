@@ -23,6 +23,8 @@ import com.example.habit_tracker.presentation.HabitsScreen
 import com.example.habit_tracker.presentation.HabitsViewModel
 import com.example.habit_tracker.ui.theme.Habit_TrackerTheme
 
+// MainActivity class
+// Builds the local database and handles navigation between screens
 class MainActivity : ComponentActivity() {
 
     private val database by lazy {

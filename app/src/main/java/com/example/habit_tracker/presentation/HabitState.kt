@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import com.example.habit_tracker.data.Habit
 
+//Habit State data class
 data class HabitState(
     val habits: List<Habit> = emptyList(),
     val habitStartDate: MutableState<Long> = mutableLongStateOf(0),

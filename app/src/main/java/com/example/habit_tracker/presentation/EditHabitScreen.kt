@@ -135,7 +135,7 @@ fun EditHabitScreen(
                 .fillMaxWidth()
                 .padding(14.dp),) {
 
-                Text("Update Habit")
+                Text("Edit Habit")
             }
         }
 

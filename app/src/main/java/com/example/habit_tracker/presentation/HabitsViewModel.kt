@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
+// View Model class between presentation screens and data classes
 class HabitsViewModel(
     private val dao: HabitDAO
 ): ViewModel() {
