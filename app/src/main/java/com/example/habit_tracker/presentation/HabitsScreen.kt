@@ -57,6 +57,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
+
+// Function for displaying the HabitsScreen
+// Retrieves state, navController, and onEvent from MainActivity
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitsScreen(
@@ -66,8 +69,8 @@ fun HabitsScreen(
 ){
     val context = LocalContext.current
     var sortMessage by remember { mutableStateOf("Sorted by date") }
-    //var expanded by remember { mutableStateOf(false) }
 
+    // Scaffold for the top header holding the app title and sort button, and users habits pulled from database
     Scaffold(
         topBar = {
             Row(
@@ -87,6 +90,7 @@ fun HabitsScreen(
                     color = MaterialTheme.colorScheme.onPrimary
                 )
 
+                //Icon Button for sorting habits by date or title, calls SortHabits() function from HabitEvents
                 IconButton(onClick = {
 
                     println(sortMessage)
@@ -136,6 +140,7 @@ fun HabitsScreen(
                  */
             }
         },
+        // FloatingActionButton on bottom right of display to navigate users to AddHabitsScreen
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 state.habitTitle.value = ""
@@ -150,6 +155,7 @@ fun HabitsScreen(
 
     ){ paddingValues ->
 
+        // LazyColumn to populate with HabitItems from database
         LazyColumn(
             contentPadding = paddingValues,
             modifier = Modifier
@@ -169,6 +175,7 @@ fun HabitsScreen(
 
     }
 
+    // Message with instructions displayed to user if no habits exist in databases
     if(state.habits.isEmpty()){
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -187,6 +194,8 @@ fun HabitsScreen(
 
 }
 
+// HabitItem function for displaying and handling individual habits
+// Retreives the state, index, navController and onEvent
 @Composable
 fun HabitItem(
     state: HabitState,
@@ -197,6 +206,8 @@ fun HabitItem(
 
     var showResetDialog by remember { mutableStateOf(false) }
 
+    // AlertDialog for confirmation if user wants to reset the streak of the selected habit
+    // On confirmation calls resetStreak function passing index state and onEvent
     if(showResetDialog){
         AlertDialog(
             title = {
@@ -229,6 +240,8 @@ fun HabitItem(
 
     var showDeleteDialog by remember { mutableStateOf(false) }
 
+    // AlertDialog for confirmation if user wants to delete the selected habit
+    // On confirm DeleteHabit function is called from HabitEvents, passing the habits index
     if(showDeleteDialog){
         AlertDialog(
             title = {
@@ -259,6 +272,7 @@ fun HabitItem(
         )
     }
 
+    // Row for displaying each habit
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -300,6 +314,8 @@ fun HabitItem(
             )
         }
 
+        // Icon Button for navigating user to edit habit, while passing the index and state of the habit
+
         IconButton(onClick = {
             editHabit(index = index, state = state, navController = navController)
         }) {
@@ -310,6 +326,8 @@ fun HabitItem(
             )
         }
 
+        // Icon Button for resetting streak
+        // On click triggers the AlertDialog for user confirmation
         IconButton(onClick = {
             showResetDialog = true
         }) {
@@ -320,6 +338,8 @@ fun HabitItem(
             )
         }
 
+        // Icon Button for deleting streak
+        // On click triggers the AlertDialog for user confirmation
         IconButton(
             onClick = { showDeleteDialog = true
         }) {
@@ -331,6 +351,8 @@ fun HabitItem(
     }
 }
 
+// Function for editing existing habit
+// Retrieves the habits index and state, setting the habit variables to current values before navigating to EditHabitScreen
 fun editHabit(
     index : Int,
     state: HabitState,
@@ -343,6 +365,9 @@ fun editHabit(
     navController.navigate("EditHabitScreen")
 }
 
+// Function for resetting habit streak by resetting habitStartDate value
+// Retrieves the habits index and state, setting all habit variables to current values except habitStartDate which is set to current time
+// Calls UpdateHabit function from HabitEvents directly to update values to database
 fun resetStreak(
     index : Int,
     state: HabitState,
@@ -360,12 +385,15 @@ fun resetStreak(
     ))
 }
 
+
+// Function for convertingLong date time to MM.dd.yyyy format
 fun convertLongToTime(time: Long): String {
     val date = Date(time)
     val format = SimpleDateFormat("MM.dd.yyyy")
     return format.format(date)
 }
 
+// Function for retrieving the habit streak, by subtracting current time by habitStartDate time and converting to days
 fun getHabitStreak(time: Long): String {
     val streak = TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - time)
     return streak.toString()
