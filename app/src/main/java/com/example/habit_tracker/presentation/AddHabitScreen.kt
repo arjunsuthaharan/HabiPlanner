@@ -1,5 +1,6 @@
 package com.example.habit_tracker.presentation
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -38,6 +40,10 @@ fun AddHabitScreen(
     navController: NavController,
     onEvent: (HabitEvents) -> Unit
 ){
+
+    var inVal = true
+    val context = LocalContext.current
+
     Scaffold(topBar = {
         Row(
             modifier = Modifier
@@ -102,11 +108,22 @@ fun AddHabitScreen(
 
 
             Button(onClick = {
-                onEvent(HabitEvents.SaveHabit(
-                    habitTitle = state.habitTitle.value,
-                    habitDescription = state.habitDescription.value
-                ))
-                navController.popBackStack()
+
+                inVal = !(state.habitTitle.value == "" || state.habitDescription.value == "")
+
+
+                if(inVal){
+                    onEvent(HabitEvents.SaveHabit(
+                        habitTitle = state.habitTitle.value,
+                        habitDescription = state.habitDescription.value
+                    ))
+                    navController.popBackStack()
+                }
+
+                else{
+                    Toast.makeText(context, "Please enter the title and description of your new habit.", Toast.LENGTH_SHORT).show()
+                }
+
             },                modifier = Modifier
                 .fillMaxWidth()
                 .padding(14.dp),) {

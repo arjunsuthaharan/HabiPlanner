@@ -1,5 +1,7 @@
 package com.example.habit_tracker.presentation
 
+import android.os.Handler
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,13 +16,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.EditNote
+import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.Reorder
 import androidx.compose.material.icons.rounded.Sort
 import androidx.compose.material.icons.rounded.SyncLock
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -37,6 +44,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,6 +60,9 @@ fun HabitsScreen(
     navController: NavController,
     onEvent: (HabitEvents) -> Unit
 ){
+    val context = LocalContext.current
+    var expanded by remember { mutableStateOf(false) }
+    var sortMessage by remember { mutableStateOf("Sorted by date") }
 
     Scaffold(
         topBar = {
@@ -72,7 +83,27 @@ fun HabitsScreen(
                     color = MaterialTheme.colorScheme.onPrimary
                 )
 
-                IconButton(onClick = {onEvent(HabitEvents.SortHabits)}) {
+                IconButton(onClick = {
+
+                    println(sortMessage)
+
+                    sortMessage = if(sortMessage == "Sorted by date"){
+                        "Sorted by title"
+                    } else{
+                        "Sorted by date"
+                    }
+
+                    println(sortMessage)
+
+                    val toast = Toast.makeText(context, sortMessage, Toast.LENGTH_SHORT)
+                    toast.show()
+
+                    Handler().postDelayed({
+                        toast.cancel()
+                    }, 1000)
+
+
+                    onEvent(HabitEvents.SortHabits)}) {
                     Icon(imageVector = Icons.Rounded.Sort,
                         contentDescription = "Sort Habits",
                         modifier = Modifier.size(35.dp),
@@ -80,18 +111,25 @@ fun HabitsScreen(
                     )
                 }
 
-                IconButton(onClick = {
-                    state.habitTitle.value = ""
-                    state.habitDescription.value = ""
-                    navController.navigate("AddHabitScreen")
-                }) {
-                    Icon(imageVector = Icons.Rounded.Add,
-                        contentDescription = "Sort Habits",
-                        modifier = Modifier.size(35.dp),
-                        tint = MaterialTheme.colorScheme.onPrimary
+                /*
+                IconButton(onClick = { expanded = !expanded }) {
+                    Icon(
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = "More"
                     )
                 }
 
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Sort by Name/Date") },
+                        onClick = { onEvent(HabitEvents.SortHabits)}
+                    )
+               }
+
+                 */
             }
         },
         floatingActionButton = {
@@ -105,6 +143,7 @@ fun HabitsScreen(
 
             }
         }
+
     ){ paddingValues ->
 
         LazyColumn(
@@ -238,16 +277,6 @@ fun HabitItem(
         }
 
         IconButton(onClick = {
-            showResetDialog = true
-        }) {
-            Icon(
-                imageVector = Icons.Rounded.SyncLock, contentDescription = "Reset Streak",
-                modifier = Modifier.size(40.dp),
-                tint = MaterialTheme.colorScheme.onSecondaryContainer
-            )
-        }
-
-        IconButton(onClick = {
             editHabit(index = index, state = state, navController = navController)
         }) {
             Icon(
@@ -257,12 +286,24 @@ fun HabitItem(
             )
         }
 
-            IconButton(onClick = { showDeleteDialog = true
-            }) {
-                Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete Habit",
-                    modifier = Modifier.size(40.dp),
-                    tint = MaterialTheme.colorScheme.onSecondaryContainer)
-            }
+        IconButton(onClick = {
+            showResetDialog = true
+        }) {
+            Icon(
+                imageVector = Icons.Rounded.Refresh, contentDescription = "Reset Streak",
+                modifier = Modifier.size(40.dp),
+                tint = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+        }
+
+        IconButton(
+            onClick = { showDeleteDialog = true
+        }) {
+            Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete Habit",
+                modifier = Modifier.size(40.dp),
+                tint = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+        }
     }
 }
 
