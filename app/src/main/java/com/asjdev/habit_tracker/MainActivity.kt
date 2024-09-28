@@ -1,4 +1,4 @@
-package com.example.habit_tracker
+package com.asjdev.habit_tracker
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -16,12 +16,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
-import com.example.habit_tracker.data.HabitsDatabase
-import com.example.habit_tracker.presentation.AddHabitScreen
-import com.example.habit_tracker.presentation.EditHabitScreen
-import com.example.habit_tracker.presentation.HabitsScreen
-import com.example.habit_tracker.presentation.HabitsViewModel
-import com.example.habit_tracker.ui.theme.Habit_TrackerTheme
+import com.asjdev.habit_tracker.data.HabitsDatabase
+import com.asjdev.habit_tracker.presentation.AddHabitScreen
+import com.asjdev.habit_tracker.presentation.EditHabitScreen
+import com.asjdev.habit_tracker.presentation.HabitsScreen
+import com.asjdev.habit_tracker.presentation.HabitsViewModel
+import com.asjdev.habit_tracker.ui.theme.Habit_TrackerTheme
 
 // MainActivity class
 // Builds the local database and handles navigation between screens

@@ -1,4 +1,4 @@
-package com.example.habit_tracker.ui.theme
+package com.asjdev.habit_tracker.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

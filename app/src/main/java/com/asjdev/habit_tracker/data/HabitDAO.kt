@@ -1,9 +1,7 @@
-package com.example.habit_tracker.data
+package com.asjdev.habit_tracker.data
 
 import androidx.room.Dao
 import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Upsert

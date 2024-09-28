@@ -1,10 +1,10 @@
-package com.example.habit_tracker.presentation
+package com.asjdev.habit_tracker.presentation
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habit_tracker.data.Habit
-import com.example.habit_tracker.data.HabitDAO
+import com.asjdev.habit_tracker.data.Habit
+import com.asjdev.habit_tracker.data.HabitDAO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine

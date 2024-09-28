@@ -1,6 +1,6 @@
-package com.example.habit_tracker.presentation
+package com.asjdev.habit_tracker.presentation
 
-import com.example.habit_tracker.data.Habit
+import com.asjdev.habit_tracker.data.Habit
 
 // HabitEvents interface
 sealed interface HabitEvents{

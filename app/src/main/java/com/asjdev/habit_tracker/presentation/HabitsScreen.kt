@@ -1,4 +1,4 @@
-package com.example.habit_tracker.presentation
+package com.asjdev.habit_tracker.presentation
 
 import android.os.Handler
 import android.widget.Toast
@@ -17,19 +17,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.EditNote
 import androidx.compose.material.icons.rounded.Refresh
-import androidx.compose.material.icons.rounded.Reorder
 import androidx.compose.material.icons.rounded.Sort
-import androidx.compose.material.icons.rounded.SyncLock
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -37,7 +31,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -204,6 +197,8 @@ fun HabitItem(
     onEvent: (HabitEvents) -> Unit,
 ){
 
+    val context = LocalContext.current
+
     var showResetDialog by remember { mutableStateOf(false) }
 
     // AlertDialog for confirmation if user wants to reset the streak of the selected habit
@@ -256,8 +251,9 @@ fun HabitItem(
             confirmButton = {
                 Button(
                     onClick = { onEvent(HabitEvents.DeleteHabit(state.habits[index]))
-                        showDeleteDialog = false}
-                    //onClick = {showDialog = false}
+                        showDeleteDialog = false
+                        val toast = Toast.makeText(context, "Deleted Habit", Toast.LENGTH_SHORT)
+                        toast.show()}
                 ) {
                     Text("Yes")
                 }

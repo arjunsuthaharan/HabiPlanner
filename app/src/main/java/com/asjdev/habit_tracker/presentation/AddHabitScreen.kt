@@ -1,4 +1,4 @@
-package com.example.habit_tracker.presentation
+package com.asjdev.habit_tracker.presentation
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -11,10 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -31,11 +29,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
-// Function for displaying the Edit Habits Screen
+// Function for displaying the Add Habits Screen
 // Retrieves state, navController and onEvent handler
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditHabitScreen(
+fun AddHabitScreen(
     state: HabitState,
     navController: NavController,
     onEvent: (HabitEvents) -> Unit
@@ -44,7 +42,8 @@ fun EditHabitScreen(
     var inVal = true
     val context = LocalContext.current
 
-    // Scaffold for the top header holding the app title and back navigation button, input fields and button for editing existing habit
+
+    // Scaffold for the top header holding the app title and back navigation button, input fields and button for adding new habit
     Scaffold(topBar = {
         Row(
             modifier = Modifier
@@ -62,7 +61,7 @@ fun EditHabitScreen(
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
-            Text(text = "Edit Habit",
+            Text(text = "Add New Habit",
                 modifier = Modifier
                     .weight(1f),
                 fontSize = 20.sp,
@@ -79,8 +78,8 @@ fun EditHabitScreen(
             modifier = Modifier.padding(paddingValues)
                 .fillMaxSize()
         ) {
+
             // TextFields for user to input habit title and description
-            // TextFields will be populated with existing habits title and description values
             TextField(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -109,33 +108,34 @@ fun EditHabitScreen(
                 }
             )
 
-            // Button for editing habit
+            // Button for adding habit
             // OnClick first performs input validation check to confirm habitTitle and habitDescription values are not null
-            // If true retrieves user inputted values and calls UpdateHabit function from HabitEvents
+            // If true retrieves user inputted values and calls SaveHabit function from HabitEvents
             // If false displays toast message instructing user to populate both fields
             Button(onClick = {
 
                 inVal = !(state.habitTitle.value == "" || state.habitDescription.value == "")
 
+
                 if(inVal){
-                    onEvent(HabitEvents.UpdateHabit(
-                        habitID = state.habitID.value,
+                    onEvent(HabitEvents.SaveHabit(
                         habitTitle = state.habitTitle.value,
-                        habitDescription = state.habitDescription.value,
-                        habitStartDate = state.habitStartDate.value
+                        habitDescription = state.habitDescription.value
                     ))
+                    val toast = Toast.makeText(context, "Updated Habit", Toast.LENGTH_SHORT)
+                    toast.show()
                     navController.popBackStack()
                 }
 
                 else{
-                    Toast.makeText(context, "Please enter the title and description of your existing habit.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Please enter the title and description of your new habit.", Toast.LENGTH_SHORT).show()
                 }
 
             },                modifier = Modifier
                 .fillMaxWidth()
                 .padding(14.dp),) {
 
-                Text("Edit Habit")
+                Text("Save Habit")
             }
         }
 

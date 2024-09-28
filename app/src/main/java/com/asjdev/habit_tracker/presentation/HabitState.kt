@@ -1,10 +1,10 @@
-package com.example.habit_tracker.presentation
+package com.asjdev.habit_tracker.presentation
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
-import com.example.habit_tracker.data.Habit
+import com.asjdev.habit_tracker.data.Habit
 
 //Habit State data class
 data class HabitState(
