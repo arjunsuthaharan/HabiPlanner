@@ -122,7 +122,7 @@ fun AddHabitScreen(
                         habitTitle = state.habitTitle.value,
                         habitDescription = state.habitDescription.value
                     ))
-                    val toast = Toast.makeText(context, "Updated Habit", Toast.LENGTH_SHORT)
+                    val toast = Toast.makeText(context, "Created Habit", Toast.LENGTH_SHORT)
                     toast.show()
                     navController.popBackStack()
                 }

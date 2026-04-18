@@ -1,5 +1,6 @@
 package com.asjdev.habit_tracker.presentation
 
+import android.content.Context
 import android.os.Handler
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -216,7 +217,7 @@ fun HabitItem(
             },
             confirmButton = {
                 Button(
-                    onClick = { resetStreak(index = index, state = state, onEvent = onEvent)
+                    onClick = { resetStreak(index = index, state = state, onEvent = onEvent, context = context)
                     showResetDialog = false}
                     //onClick = {showDialog = false}
                 ) {
@@ -367,8 +368,10 @@ fun editHabit(
 fun resetStreak(
     index : Int,
     state: HabitState,
-    onEvent: (HabitEvents) -> Unit
+    onEvent: (HabitEvents) -> Unit,
+    context: Context
 ){
+
     state.habitID.value = state.habits[index].habitID
     state.habitStartDate.value = System.currentTimeMillis()
     state.habitTitle.value = state.habits[index].habitTitle
@@ -379,8 +382,9 @@ fun resetStreak(
         habitDescription = state.habitDescription.value,
         habitStartDate = state.habitStartDate.value
     ))
+    val toast = Toast.makeText(context, "Reset Streak", Toast.LENGTH_SHORT)
+    toast.show()
 }
-
 
 // Function for convertingLong date time to MM.dd.yyyy format
 fun convertLongToTime(time: Long): String {
